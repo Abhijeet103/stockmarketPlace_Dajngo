@@ -3,6 +3,14 @@ from django.db import models
 
 # Create your models here.
 
+
+class UserInfo(models.Model) :
+    user = models.OneToOneField(User ,  on_delete=models.CASCADE)
+    panCard =  models.CharField(max_length=100)
+    phoneNumber  = models.CharField(max_length=15)
+    profile_pic  =  models.ImageField('profile_pic/')
+    panCard_Image =  models.ImageField('pancard/')
+
 class Stock(models.Model) :
     ticker = models.CharField(max_length=10 , primary_key=True)
     name  =  models.CharField(max_length=200)

@@ -5,7 +5,7 @@ from  .models import *
 
 admin.site.register(UserStock)
 
-
+admin.site.register(UserInfo)
 
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin) :
