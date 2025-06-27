@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 import requests
@@ -130,6 +131,9 @@ def buy(request ,  stock_id) :
         userstock = UserStock(user = user , stock  =  stock ,  buyQuantity  =  purchaseQuantity , buyPrice  = stock.curr_price )
         userstock.save()
 
+    send_mail(subject="Buy Option executed successfully", message=f"your purchase of stock {stock.name} is successfull", from_email=None,
+              recipient_list=[user.email], fail_silently=False)
+
     return redirect('index')
 
 @login_required
@@ -139,6 +143,9 @@ def sell(request , id) :
     sellQuantity  =  request.POST.get('quantity')
     userstock = UserStock.objects.filter(user=user, stock=stock)
     userstock.buyQuantity -= sellQuantity
+
+    send_mail(subject="Sell  Option executed successfully", message=f"your Sale of stock {stock.name} is successfull", from_email=None,
+              recipient_list=[user.email], fail_silently=False)
 
     return redirect('index')
 
